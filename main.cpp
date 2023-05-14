@@ -123,7 +123,7 @@ int main() {
     int operasi2;
     double input1, input2, input;
 
-    cout << "===== Calculadora de Grupos de Ocho ======" << endl;
+    cout << "===== Calculadora sederhana ======" << endl;
 
     while (true) {
         cout << " " << endl;
