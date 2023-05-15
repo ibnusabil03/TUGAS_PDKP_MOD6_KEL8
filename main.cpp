@@ -1,25 +1,27 @@
-#include <iostream>
-#include <vector>
+ #include <iostream>
 #include <cmath>
 
 using namespace std;
 
 class Calculator {
 protected:
-    vector<double> numbers;
+    double numbers [100];
+    int count;
 
 public:
+    Calculator() : count (0){}
     virtual void addNumber(double number) = 0;
     virtual double getResult() = 0;
     virtual void clear() {
-        numbers.clear();
+        count=0;
     }
 };
 
 class BasicCalculator : public Calculator {
 public:
     void addNumber(double number) {
-        numbers.push_back(number);
+        numbers[count] = number;
+        count++;
     }
 
     double getResult() {
@@ -27,28 +29,31 @@ public:
         for (double number : numbers) {
             result += number;
         }
+        clear();
         return result;
     }
 
     double subtract() {
         double result = numbers[0];
-        for (int i = 1; i < numbers.size(); i++) {
+        for (int i = 1; i < count ; i++) {
             result -= numbers[i];
         }
+        clear();
         return result;
     }
 
     double multiply() {
         double result = 1;
-        for (double number : numbers) {
-            result *= number;
+        for (int i = 0; i < count; i++){
+            result *= numbers[i];
         }
+        clear();
         return result;
     }
 
     double divide() {
         double result = numbers[0];
-        for (int i = 1; i < numbers.size(); i++) {
+        for (int i = 1; i < count; i++) {
             if (numbers[i] != 0) {
                 result /= numbers[i];
             } else {
@@ -56,6 +61,7 @@ public:
                 return 0;
             }
         }
+        clear();
         return result;
     }
 };
@@ -78,18 +84,22 @@ public:
 class ScientificCalculator : public Calculator {
 public:
     void addNumber(double number) {
-        numbers.push_back(number);
+        numbers[count] = number;
+        count++;
     }
 
     double getResult() {
+        clear();
         return numbers[0];
     }
 
     double squareRoot() {
+        clear();
         return sqrt(numbers[0]);
     }
 
     double exponentiation() {
+        clear();
         return pow(numbers[0], numbers[1]);
     }
 
@@ -99,18 +109,22 @@ public:
         for (int i = 2; i <= n; i++) {
             result *= i;
         }
+        clear();
         return result;
     }
 
     double sine() {
+        clear();
         return Trigonometry::sine(numbers[0]);
     }
 
     double cosine() {
+        clear();
         return Trigonometry::cosine(numbers[0]);
     }
 
     double tangent() {
+        clear();
         return Trigonometry::tangent(numbers[0]);
     }
 };
@@ -123,7 +137,7 @@ int main() {
     int operasi2;
     double input1, input2, input;
 
-    cout << "===== Calculadora sederhana ======" << endl;
+    cout << "===== Kalkulator Sederhana ======" << endl;
 
     while (true) {
         cout << " " << endl;
@@ -140,8 +154,7 @@ int main() {
             cin >> operasi1;
 
             if (operasi1 == 1) {
-                while (operasi1 == 1)
-        {
+                while (operasi1 == 1){
                     cout << "Masukkan angka (masukkan 'x' untuk berhenti): ";
                     while (cin >> input) {
                         basicCalc.addNumber(input);
@@ -157,6 +170,7 @@ int main() {
                     }
                 }
                 cout << "Hasil penjumlahan: " << basicCalc.getResult() << endl;
+
             } else if (operasi1 == 2) {
                 while (operasi1 == 2) {
                     cout << "Masukkan angka (masukkan 'x' untuk berhenti): ";
@@ -192,7 +206,7 @@ int main() {
                 }
                 cout << "Hasil perkalian: " << basicCalc.multiply() << endl;
             } else if (operasi1 == 4) {
-                while (operasi1 == 3) {
+                while (operasi1 == 4) {
                     cout << "Masukkan angka (masukkan 'x' untuk berhenti): ";
                     while (cin >> input) {
                         basicCalc.addNumber(input);
@@ -223,6 +237,7 @@ int main() {
                 cin >> input1;
                 scientificCalc.addNumber(input1);
                 cout << "Hasil akar kuadrat: " << scientificCalc.squareRoot() << endl;
+
             } else if (operasi2 == 2) {
                 cout << "Masukkan angka: ";
                 cin >> input1;
@@ -231,7 +246,6 @@ int main() {
                 scientificCalc.addNumber(input1);
                 scientificCalc.addNumber(input2);
                 cout << "Hasil pemangkatan: " << scientificCalc.exponentiation () << endl;
-                cout << "Hasil pemangkatan: " << scientificCalc.exponentiation() << endl;
             } else if (operasi2 == 3) {
                 cout << "Masukkan angka: ";
                 cin >> input1;
@@ -265,3 +279,4 @@ int main() {
 
     return 0;
 }
+                
